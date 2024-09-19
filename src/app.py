@@ -90,7 +90,7 @@ def scheduled_report():
         send_line_notification(message)
         print("Report generated successfully.")
     except Exception as e:
-        print(f"Error generating report: {e}")
+        print(f"Error generating reports: {e}")
         traceback.print_exc()
 
 
