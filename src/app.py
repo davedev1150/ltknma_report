@@ -67,7 +67,7 @@ def serve_file(filename):
     SRCDIR = os.path.dirname(os.path.abspath(__file__))
     print("SRCDIR", SRCDIR)
     file_path = os.path.join(
-        SRCDIR, "service/", filename)
+        SRCDIR, "output_file/", filename)
     return send_file(file_path, as_attachment=True)
 
 

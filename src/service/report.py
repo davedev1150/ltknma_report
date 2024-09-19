@@ -579,7 +579,7 @@ def Main():
     pdf_path = os.path.join(current_folder, "Template-without-chart.pdf")
     file_name = f"LTKNMA-Report-{(datetime.now() - timedelta(1)).strftime('%d-%m-%Y')}-{(datetime.now() - timedelta(1)).strftime('%H-%M-%S')}.pdf"
     output_pdf_path = os.path.join(
-        current_folder, file_name)
+        current_folder,"../output_file", file_name)
 
     images = [
         {

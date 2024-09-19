@@ -7,6 +7,7 @@ services:
     container_name: flask_ltk_report
     environment:
       - ENV=prod
+    restart: always
     ports:
       - "2512:2512"
     command: ["python3","src/app.py"]
