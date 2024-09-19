@@ -36,10 +36,11 @@ def get_data():
 def get_report_data():
     print("Fetching data...")
     report_path = Main()
-    if report_path is None:
-        return jsonify({"message": "Failed to generate report"}), 500
-    else:
-        return send_file(report_path, as_attachment=True, mimetype='application/pdf')
+    return jsonify({"message": "Failed to generate report",report_path}), 500
+    # if report_path is None:
+    #     return jsonify({"message": "Failed to generate report"}), 500
+    # else:
+    #     return send_file(report_path, as_attachment=True, mimetype='application/pdf')
 
 
 # Function to run the Main() function
