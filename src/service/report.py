@@ -9,6 +9,7 @@ import pandas as pd
 import requests
 import fitz  # PyMuPDF
 import matplotlib
+import traceback
 #import logging
 matplotlib.use('Agg')
 
@@ -195,7 +196,7 @@ def Main():
 
             plot_file = os.path.join(script_dir, f'{inc}.jpeg')
             print(f"{plot_file}")
-            plt.savefig(plot_file, format='jpeg/png', bbox_inches='tight')
+            plt.savefig(plot_file, format='jpeg', bbox_inches='tight')
 
             plt.close()
 
@@ -322,7 +323,7 @@ def Main():
 
             combined_plot_file = os.path.join(script_dir, f'Shear-{inc}.jpeg')
             print(f"{combined_plot_file}")
-            plt.savefig(combined_plot_file, format='jpeg/png',
+            plt.savefig(combined_plot_file, format='jpeg',
                         bbox_inches='tight')
             plt.close()  # Close the plot to free up memory
 
@@ -502,7 +503,7 @@ def Main():
 
                 # Save the combined plot as a JPEG file
                 plot_file = os.path.join(script_dir, image_name)
-                plt.savefig(plot_file, format='jpeg/png',
+                plt.savefig(plot_file, format='jpeg',
                             bbox_inches='tight', pad_inches=0.1)
                 print(f"Saved {image_name}")
                 plt.close()
