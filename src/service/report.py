@@ -570,8 +570,8 @@ def Main():
                         )
 
                     # Delete the image file after insertion
-                    os.remove(image_path)
-                    print(f"Deleted image: {image_path}")
+                    # os.remove(image_path)
+                    # print(f"Deleted image: {image_path}")
 
                 pdf_document.save(output_path)
                 pdf_document.close()
