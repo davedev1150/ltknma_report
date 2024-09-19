@@ -19,6 +19,7 @@ def Main():
 
         ids = ['A16', 'A17']
         print("Fetching data...")
+
         def fetch_and_display_image(station_id, date):
             url = f'https://dms.gfe.co.th/api/acc-api/trigger/summary-chart?station={station_id}&dam=LTKNMA&date={date}'
             headers = {
@@ -506,8 +507,13 @@ def Main():
                 print(f"Failed to fetch data from {url}")
 
         # *****************************************************************************************************************************************
+        current_folder = os.path.dirname(os.path.abspath(__file__))
+        pdf_path = os.path.join(current_folder, "Template-without-chart.pdf")
+        file_name = f"LTKNMA-Report-{(datetime.now() - timedelta(1)).strftime('%d-%m-%Y')}-{(datetime.now() - timedelta(1)).strftime('%H-%M-%S')}.pdf"
+        output_pdf_path = os.path.join(
+            current_folder, "../output_file", file_name)
 
-        def add_images_and_text_to_pdf(pdf_path, images, output_pdf_path):
+        def add_images_and_text_to_pdf(pdf_path, images, output_path):
             try:
                 # Open the PDF template
                 pdf_document = fitz.open(pdf_path)
@@ -567,11 +573,13 @@ def Main():
                     os.remove(image_path)
                     print(f"Deleted image: {image_path}")
 
-                pdf_document.save(output_pdf_path)
+                pdf_document.save(output_path)
                 pdf_document.close()
 
                 print(
-                    f"Images and text added to the PDF. Saved as {output_pdf_path}")
+                    f"Images and text added to the PDF. Saved as {output_path}")
+
+                return output_path
             #  # Open the PDF file with the default viewer
             #     if os.name == 'nt':  # For Windows
             #         os.startfile(output_pdf_path)
@@ -580,12 +588,6 @@ def Main():
 
             except Exception as e:
                 print(f"Error: {e}")
-
-        current_folder = os.path.dirname(os.path.abspath(__file__))
-        pdf_path = os.path.join(current_folder, "Template-without-chart.pdf")
-        file_name = f"LTKNMA-Report-{(datetime.now() - timedelta(1)).strftime('%d-%m-%Y')}-{(datetime.now() - timedelta(1)).strftime('%H-%M-%S')}.pdf"
-        output_pdf_path = os.path.join(
-            current_folder, "../output_file", file_name)
 
         images = [
             {
@@ -692,9 +694,9 @@ def Main():
             }
         ]
 
-        add_images_and_text_to_pdf(pdf_path, images, output_pdf_path)
+        output_path = add_images_and_text_to_pdf(pdf_path, images, output_pdf_path)
 
-        return output_pdf_path, file_name
+        return output_path, file_name
     except Exception as e:
         print("Error in function Main():", e)
         traceback.print_exc()

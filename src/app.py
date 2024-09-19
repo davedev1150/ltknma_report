@@ -34,6 +34,7 @@ def get_data():
 
 @app.route('/report', methods=['GET'])
 def get_report_data():
+    print("Fetching data...")
     report_path, file_name = Main()
     print(report_path, file_name)
     return send_file(report_path, as_attachment=True)
