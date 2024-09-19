@@ -1,0 +1,12 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  flask_ltk_report:
+    build: .
+    container_name: flask_ltk_report
+    environment:
+      - ENV=prod
+    ports:
+      - "2512:2512"
+    command: ["python3","src/app.py"]
