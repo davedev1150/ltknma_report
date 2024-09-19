@@ -40,8 +40,6 @@ def get_report_data():
 
 
 # Function to run the Main() function
-
-
 def send_line_notification(message):
     url = 'https://notify-api.line.me/api/notify'
     # Replace with your actual LINE Notify token
@@ -77,8 +75,7 @@ def scheduled_report():
     try:
         print("Running scheduled report...")
         report_path, file_name = Main()
-        url = DOMAIN_URL+"/get-file/"+file_name
-        # Example usage
+        url = DOMAIN_URL + "/get-file/" + file_name
         send_line_notification(url)
         print("Report generated successfully.")
     except Exception as e:
@@ -95,14 +92,14 @@ if __name__ == '__main__':
 
     # Schedule the task to run every 10 minutes
     scheduler.add_job(scheduled_report, 'interval', minutes=10)
-
+    print(scheduler.get_jobs())  # Print all jobs in the scheduler
     # Start the scheduler
     scheduler.start()
 
     try:
         # Start the Flask app
 
-        app.run(host='0.0.0.0', port=port)
+        app.run(host='0.0.0.0', port=port, use_reloader=False)
 
     except (KeyboardInterrupt, SystemExit):
         # Shut down the scheduler when exiting the app
