@@ -37,7 +37,7 @@ def get_report_data():
     print("Fetching data...")
     report_path, file_name = Main()
     print(report_path, file_name)
-    return send_file(report_path, as_attachment=True)
+    return send_file(report_path, as_attachment=True, download_name=file_name,mimetype='application/pdf')
 
 
 # Function to run the Main() function
@@ -69,7 +69,7 @@ def serve_file(filename):
     print("SRCDIR", SRCDIR)
     file_path = os.path.join(
         SRCDIR, "output_file/", filename)
-    return send_file(file_path, as_attachment=True)
+    return send_file(file_path, as_attachment=True, download_name=filename,mimetype='application/pdf')
 
 
 def scheduled_report():
@@ -100,7 +100,7 @@ if __name__ == '__main__':
     try:
         # Start the Flask app
 
-        app.run(host='0.0.0.0', port=port, use_reloader=False,debug=True)
+        app.run(host='0.0.0.0', port=port, use_reloader=False, debug=True)
 
     except (KeyboardInterrupt, SystemExit):
         # Shut down the scheduler when exiting the app
