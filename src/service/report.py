@@ -512,122 +512,118 @@ def Main():
                 print(f"Failed to fetch data from {url}")
 
         # *****************************************************************************************************************************************
-        SRCDIR = os.path.dirname(os.path.abspath(__file__))
-        if not os.path.exists(SRCDIR):
-            os.makedirs(SRCDIR, exist_ok=True)
-        print("SRCDIR", SRCDIR)
-        pdf_template_path = os.path.join(
-            SRCDIR, "Template-without-chart.pdf")
-        # Generate a dynamic file name based on timestamp
-        
-
-        images = [
-            {
-                'path': os.path.join(SRCDIR, "Piezo0+125.jpeg"),
-                'page': 0,
-                'position': (50, 490),
-                'scale': 0.42
-            },
-            {
-                'path': os.path.join(SRCDIR, "Piezo0+190.jpeg"),
-                'page': 1,
-                'position': (50, 220),
-                'scale': 0.42
-            },
-            {
-                'path': os.path.join(SRCDIR, "Piezo0+250.jpeg"),
-                'page': 2,
-                'position': (50, 220),
-                'scale': 0.42
-            },
-            {
-                'path': os.path.join(SRCDIR, "OSP1.jpeg"),
-                'page': 3,
-                'position': (50, 220),
-                'scale': 0.42
-            },
-            {
-                'path': os.path.join(SRCDIR, "OSP2.jpeg"),
-                'page': 4,
-                'position': (50, 220),
-                'scale': 0.42
-            },
-            {
-                'path': os.path.join(SRCDIR, "OSP3.jpeg"),
-                'page': 5,
-                'position': (50, 220),
-                'scale': 0.42
-            },
-            {
-                'path': os.path.join(SRCDIR, "INC1.jpeg"),
-                'page': 6,
-                'position': (50, 220),
-                'scale': 0.34
-            },
-            {
-                'path': os.path.join(SRCDIR, "Shear-INC1.jpeg"),
-                'page': 6,
-                'position': (40, 500),
-                'scale': 0.33
-            },
-            {
-                'path': os.path.join(SRCDIR, "INC2.jpeg"),
-                'page': 7,
-                'position': (50, 220),
-                'scale': 0.34
-            },
-            {
-                'path': os.path.join(SRCDIR, "Shear-INC2.jpeg"),
-                'page': 7,
-                'position': (40, 500),
-                'scale': 0.33
-            },
-            {
-                'path': os.path.join(SRCDIR, "INC3.jpeg"),
-                'page': 8,
-                'position': (50, 220),
-                'scale': 0.34
-            },
-            {
-                'path': os.path.join(SRCDIR, "Shear-INC3.jpeg"),
-                'page': 8,
-                'position': (40, 500),
-                'scale': 0.33
-            },
-            {
-                'path': os.path.join(SRCDIR, "INC4.jpeg"),
-                'page': 9,
-                'position': (50, 220),
-                'scale': 0.34
-            },
-            {
-                'path': os.path.join(SRCDIR, "Shear-INC4.jpeg"),
-                'page': 9,
-                'position': (40, 500),
-                'scale': 0.33
-            },
-            {
-                'path': os.path.join(SRCDIR, "OW.jpeg"),
-                'page': 10,
-                'position': (50, 400),
-                'scale': 0.42
-            },
-            {
-                'path': os.path.join(SRCDIR, "A16_Summary.PNG"),
-                'page': 11,
-                'position': (50, 105),
-                'scale': 0.45
-            },
-            {
-                'path': os.path.join(SRCDIR, "A17_Summary.PNG"),
-                'page': 11,
-                'position': (50, 435),
-                'scale': 0.45
-            }
-        ]
 
         def add_images_and_text_to_pdf():
             try:
+                SRCDIR = os.path.dirname(os.path.abspath(__file__))
+                print("SRCDIR", SRCDIR)
+                pdf_template_path = os.path.join(
+                    SRCDIR, "Template-without-chart.pdf")
+                # Generate a dynamic file name based on timestamp
+                images = [
+                    {
+                        'path': os.path.join(SRCDIR, "Piezo0+125.jpeg"),
+                        'page': 0,
+                        'position': (50, 490),
+                        'scale': 0.42
+                    },
+                    {
+                        'path': os.path.join(SRCDIR, "Piezo0+190.jpeg"),
+                        'page': 1,
+                        'position': (50, 220),
+                        'scale': 0.42
+                    },
+                    {
+                        'path': os.path.join(SRCDIR, "Piezo0+250.jpeg"),
+                        'page': 2,
+                        'position': (50, 220),
+                        'scale': 0.42
+                    },
+                    {
+                        'path': os.path.join(SRCDIR, "OSP1.jpeg"),
+                        'page': 3,
+                        'position': (50, 220),
+                        'scale': 0.42
+                    },
+                    {
+                        'path': os.path.join(SRCDIR, "OSP2.jpeg"),
+                        'page': 4,
+                        'position': (50, 220),
+                        'scale': 0.42
+                    },
+                    {
+                        'path': os.path.join(SRCDIR, "OSP3.jpeg"),
+                        'page': 5,
+                        'position': (50, 220),
+                        'scale': 0.42
+                    },
+                    {
+                        'path': os.path.join(SRCDIR, "INC1.jpeg"),
+                        'page': 6,
+                        'position': (50, 220),
+                        'scale': 0.34
+                    },
+                    {
+                        'path': os.path.join(SRCDIR, "Shear-INC1.jpeg"),
+                        'page': 6,
+                        'position': (40, 500),
+                        'scale': 0.33
+                    },
+                    {
+                        'path': os.path.join(SRCDIR, "INC2.jpeg"),
+                        'page': 7,
+                        'position': (50, 220),
+                        'scale': 0.34
+                    },
+                    {
+                        'path': os.path.join(SRCDIR, "Shear-INC2.jpeg"),
+                        'page': 7,
+                        'position': (40, 500),
+                        'scale': 0.33
+                    },
+                    {
+                        'path': os.path.join(SRCDIR, "INC3.jpeg"),
+                        'page': 8,
+                        'position': (50, 220),
+                        'scale': 0.34
+                    },
+                    {
+                        'path': os.path.join(SRCDIR, "Shear-INC3.jpeg"),
+                        'page': 8,
+                        'position': (40, 500),
+                        'scale': 0.33
+                    },
+                    {
+                        'path': os.path.join(SRCDIR, "INC4.jpeg"),
+                        'page': 9,
+                        'position': (50, 220),
+                        'scale': 0.34
+                    },
+                    {
+                        'path': os.path.join(SRCDIR, "Shear-INC4.jpeg"),
+                        'page': 9,
+                        'position': (40, 500),
+                        'scale': 0.33
+                    },
+                    {
+                        'path': os.path.join(SRCDIR, "OW.jpeg"),
+                        'page': 10,
+                        'position': (50, 400),
+                        'scale': 0.42
+                    },
+                    {
+                        'path': os.path.join(SRCDIR, "A16_Summary.PNG"),
+                        'page': 11,
+                        'position': (50, 105),
+                        'scale': 0.45
+                    },
+                    {
+                        'path': os.path.join(SRCDIR, "A17_Summary.PNG"),
+                        'page': 11,
+                        'position': (50, 435),
+                        'scale': 0.45
+                    }
+                ]
                 file_name = f"LTKNMA-Report-{(datetime.now() - timedelta(1)).strftime('%d-%m-%Y')}-{(datetime.now() - timedelta(1)).strftime('%H-%M-%S')}.pdf"
                 output_pdf_path = os.path.join(
                     SRCDIR, file_name)
@@ -695,7 +691,7 @@ def Main():
                 print(
                     f"Images and text added to the PDF. Saved as {output_pdf_path}")
 
-                return output_pdf_path,file_name
+                return output_pdf_path
             #  # Open the PDF file with the default viewer
             #     if os.name == 'nt':  # For Windows
             #         os.startfile(output_pdf_path)
@@ -704,10 +700,11 @@ def Main():
 
             except Exception as e:
                 print(f"Error: {e}")
+                return None
 
-        output_pdf_path_export,file_name_export = add_images_and_text_to_pdf()
-       
-        return output_pdf_path_export, file_name_export
+        output_pdf_path_export = add_images_and_text_to_pdf()
+
+        return output_pdf_path_export
     except Exception as e:
         print("Error in function Main():", e)
         traceback.print_exc()

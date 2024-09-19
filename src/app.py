@@ -35,9 +35,11 @@ def get_data():
 @app.route('/report', methods=['GET'])
 def get_report_data():
     print("Fetching data...")
-    report_path, file_name = Main()
-    print("Data fetched successfully.",report_path, file_name)
-    return send_file(report_path, as_attachment=True, download_name=file_name, mimetype='application/pdf')
+    report_path = Main()
+    if report_path is None:
+        return jsonify({"message": "Failed to generate report"}), 500
+    else:
+        return send_file(report_path, as_attachment=True, mimetype='application/pdf')
 
 
 # Function to run the Main() function
@@ -75,7 +77,8 @@ def serve_file(filename):
 def scheduled_report():
     try:
         print("Running scheduled report...")
-        report_path, file_name = Main()
+        report_path = Main()
+        file_name = report_path.split("/")[-1]
         url = DOMAIN_URL + "/get-file/" + file_name
         send_line_notification(url)
         print("Report generated successfully.")
