@@ -82,11 +82,11 @@ def scheduled_report():
         message = "Generate LTKNMA Report!"
         if report_path is None:
             message += "\nFailed to generate report"
-         else:
-           file_name = report_path.split("/")[-1]
+        else:
+            file_name = report_path.split("/")[-1]
             url = DOMAIN_URL + "/get-file/" + file_name
             message += f"\n{url}"
-        
+
         send_line_notification(message)
         print("Report generated successfully.")
     except Exception as e:
