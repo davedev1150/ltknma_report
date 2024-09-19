@@ -612,13 +612,13 @@ def Main():
                         'scale': 0.42
                     },
                     {
-                        'path': os.path.join(SRCDIR, "A16_Summary.PNG"),
+                        'path': os.path.join(SRCDIR, "A16_Summary.png"),
                         'page': 11,
                         'position': (50, 105),
                         'scale': 0.45
                     },
                     {
-                        'path': os.path.join(SRCDIR, "A17_Summary.PNG"),
+                        'path': os.path.join(SRCDIR, "A17_Summary.png"),
                         'page': 11,
                         'position': (50, 435),
                         'scale': 0.45
@@ -633,11 +633,6 @@ def Main():
                 # Calculate yesterday's date
                 yesterday = datetime.now() - timedelta(1)
                 date_text = yesterday.strftime("%d/%m/%Y")
-
-                # Define font path (adjust path to your font file)
-                # font_path = os.path.join(os.path.dirname(__file__), "Noto Sans Thai Regular.ttf")
-                # if not os.path.exists(font_path):
-                #     raise FileNotFoundError(f"Font file not found: {font_path}")
 
                 # Add text to all pages
                 for page_num in range(len(pdf_document)):
@@ -701,7 +696,8 @@ def Main():
 
             except Exception as e:
                 print(f"Error: {e}")
-                return e
+                return None
+               
 
         output_pdf_path_export = add_images_and_text_to_pdf()
 
