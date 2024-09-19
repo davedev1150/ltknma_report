@@ -9,7 +9,10 @@ import pandas as pd
 import requests
 import fitz  # PyMuPDF
 import matplotlib
+import logging
 matplotlib.use('Agg')
+
+logging.basicConfig(level=logging.DEBUG)
 
 
 def Main():
@@ -18,7 +21,7 @@ def Main():
         yesterday = (datetime.now() - timedelta(1)).strftime('%Y-%m-%d')
 
         ids = ['A16', 'A17']
-        print("Fetching data...")
+        logging.debug("Fetching data...")
 
         def fetch_and_display_image(station_id, date):
             url = f'https://dms.gfe.co.th/api/acc-api/trigger/summary-chart?station={station_id}&dam=LTKNMA&date={date}'
@@ -694,7 +697,8 @@ def Main():
             }
         ]
 
-        output_path = add_images_and_text_to_pdf(pdf_path, images, output_pdf_path)
+        output_path = add_images_and_text_to_pdf(
+            pdf_path, images, output_pdf_path)
 
         return output_path, file_name
     except Exception as e:
