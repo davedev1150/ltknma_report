@@ -624,8 +624,9 @@ def Main():
             }
         ]
 
-        def add_images_and_text_to_pdf(pdf_path, images, output_pdf_path):
+        def add_images_and_text_to_pdf(pdf_path, images, output_path):
             try:
+                
                 # Open the PDF template
                 pdf_document = fitz.open(pdf_path)
 
@@ -700,10 +701,10 @@ def Main():
             except Exception as e:
                 print(f"Error: {e}")
 
-        output_path = add_images_and_text_to_pdf(
+        output_pdf_path_export = add_images_and_text_to_pdf(
             pdf_path, images, output_pdf_path)
 
-        return output_path, file_name
+        return output_pdf_path_export, file_name
     except Exception as e:
         print("Error in function Main():", e)
         traceback.print_exc()
