@@ -1,5 +1,5 @@
 # docker-compose.yml
-version: '3.8'
+version: '3.9'
 
 services:
   flask_ltk_report:
@@ -10,4 +10,6 @@ services:
     restart: always
     ports:
       - "2512:2512"
+    volumes:
+      - .:/app
     command: ["python3","src/app.py"]

@@ -99,7 +99,7 @@ if __name__ == '__main__':
     try:
         # Start the Flask app
 
-        app.run(host='0.0.0.0', port=port, use_reloader=False)
+        app.run(host='0.0.0.0', port=port, use_reloader=False,debug=True)
 
     except (KeyboardInterrupt, SystemExit):
         # Shut down the scheduler when exiting the app
