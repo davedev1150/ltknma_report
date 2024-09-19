@@ -100,7 +100,7 @@ if __name__ == '__main__':
 
     scheduled_report()
 
-    Schedule the task to run every day at 3 AM
+    #Schedule the task to run every day at 3 AM
     scheduler.add_job(scheduled_report, 'cron', hour=3, minute=0)
 
     # Schedule the task to run every 10 minutes
