@@ -71,16 +71,23 @@ def serve_file(filename):
     print("SRCDIR", SRCDIR)
     file_path = os.path.join(
         SRCDIR, "service/", filename)
-    return send_file(file_path, as_attachment=True, download_name=filename, mimetype='application/pdf')
+    return send_file(file_path, as_attachment=True, mimetype='application/pdf')
 
 
 def scheduled_report():
     try:
         print("Running scheduled report...")
+
         report_path = Main()
-        file_name = report_path.split("/")[-1]
-        url = DOMAIN_URL + "/get-file/" + file_name
-        send_line_notification(url)
+        message = "Generate LTKNMA Report!"
+        if report_path is None:
+            message += "\nFailed to generate report"
+         else:
+           file_name = report_path.split("/")[-1]
+            url = DOMAIN_URL + "/get-file/" + file_name
+            message += f"\n{url}"
+        
+        send_line_notification(message)
         print("Report generated successfully.")
     except Exception as e:
         print(f"Error generating report: {e}")

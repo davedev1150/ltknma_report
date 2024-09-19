@@ -677,10 +677,9 @@ def Main():
                         )
 
                     # Delete the image file after insertion
-                    # os.remove(image_path)
-                    # print(f"Deleted image: {image_path}")
-                if not os.access(SRCDIR, os.W_OK):
-                    print(f"No write permission for directory: {SRCDIR}")
+                    os.remove(image_path)
+                    print(f"Deleted image: {image_path}")
+
                 pdf_document.save(output_pdf_path)
                 pdf_document.close()
 
@@ -697,7 +696,6 @@ def Main():
             except Exception as e:
                 print(f"Error: {e}")
                 return None
-               
 
         output_pdf_path_export = add_images_and_text_to_pdf()
 
