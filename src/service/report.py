@@ -9,10 +9,10 @@ import pandas as pd
 import requests
 import fitz  # PyMuPDF
 import matplotlib
-import logging
+#import logging
 matplotlib.use('Agg')
 
-logging.basicConfig(level=logging.DEBUG)
+#logging.basicConfig(level=logging.DEBUG)
 
 
 def Main():
@@ -21,7 +21,7 @@ def Main():
         yesterday = (datetime.now() - timedelta(1)).strftime('%Y-%m-%d')
 
         ids = ['A16', 'A17']
-        logging.debug("Fetching data...")
+        #logging.debug("Fetching data...")
 
         def fetch_and_display_image(station_id, date):
             url = f'https://dms.gfe.co.th/api/acc-api/trigger/summary-chart?station={station_id}&dam=LTKNMA&date={date}'
@@ -195,7 +195,7 @@ def Main():
 
             plot_file = os.path.join(script_dir, f'{inc}.jpeg')
             print(f"{plot_file}")
-            plt.savefig(plot_file, format='jpeg', bbox_inches='tight')
+            plt.savefig(plot_file, format='jpeg/png', bbox_inches='tight')
 
             plt.close()
 
@@ -322,7 +322,8 @@ def Main():
 
             combined_plot_file = os.path.join(script_dir, f'Shear-{inc}.jpeg')
             print(f"{combined_plot_file}")
-            plt.savefig(combined_plot_file, format='jpeg', bbox_inches='tight')
+            plt.savefig(combined_plot_file, format='jpeg/png',
+                        bbox_inches='tight')
             plt.close()  # Close the plot to free up memory
 
         # *****************************************************************************************************************************************
@@ -501,7 +502,7 @@ def Main():
 
                 # Save the combined plot as a JPEG file
                 plot_file = os.path.join(script_dir, image_name)
-                plt.savefig(plot_file, format='jpeg',
+                plt.savefig(plot_file, format='jpeg/png',
                             bbox_inches='tight', pad_inches=0.1)
                 print(f"Saved {image_name}")
                 plt.close()
@@ -512,86 +513,11 @@ def Main():
         # *****************************************************************************************************************************************
         current_folder = os.path.dirname(os.path.abspath(__file__))
         pdf_path = os.path.join(current_folder, "Template-without-chart.pdf")
+        # Generate a dynamic file name based on timestamp
         file_name = f"LTKNMA-Report-{(datetime.now() - timedelta(1)).strftime('%d-%m-%Y')}-{(datetime.now() - timedelta(1)).strftime('%H-%M-%S')}.pdf"
+
         output_pdf_path = os.path.join(
             current_folder, file_name)
-
-        def add_images_and_text_to_pdf(pdf_path, images, output_path):
-            try:
-                # Open the PDF template
-                pdf_document = fitz.open(pdf_path)
-
-                # Calculate yesterday's date
-                yesterday = datetime.now() - timedelta(1)
-                date_text = yesterday.strftime("%d/%m/%Y")
-
-                # Define font path (adjust path to your font file)
-                # font_path = os.path.join(os.path.dirname(__file__), "Noto Sans Thai Regular.ttf")
-                # if not os.path.exists(font_path):
-                #     raise FileNotFoundError(f"Font file not found: {font_path}")
-
-                # Add text to all pages
-                for page_num in range(len(pdf_document)):
-                    page = pdf_document.load_page(page_num)
-
-                    # Define text to add
-                    text = f"Dam monitoring report {date_text}"
-
-                    # Define text positioning
-                    # Adjust to fit text size and position
-                    text_position = fitz.Point(page.rect.width - 165, 30)
-
-                    # Add text to the page
-                    page.insert_text(
-                        text_position,
-                        text,
-                        fontsize=8,
-                        # fontfile=font_path,  # Use custom font
-                        color=(0, 0, 0)     # Black color
-                    )
-
-                # Loop through the list of images
-                for image_info in images:
-                    image_path = image_info['path']
-                    page_num = image_info['page']
-                    position = image_info['position']
-                    scale = image_info['scale']
-
-                    if not os.path.exists(image_path):
-                        raise FileNotFoundError(
-                            f"Image file not found: {image_path}")
-                    with Image.open(image_path) as img:
-                        img_width, img_height = img.size
-                        new_width = img_width * scale
-                        new_height = img_height * scale
-
-                        page = pdf_document.load_page(page_num)
-                        page.insert_image(
-                            fitz.Rect(position[0], position[1], position[0] +
-                                      new_width, position[1] + new_height),
-                            filename=image_path
-                        )
-
-                    # Delete the image file after insertion
-                    # os.remove(image_path)
-                    # print(f"Deleted image: {image_path}")
-
-                pdf_document.save(output_path)
-                pdf_document.close()
-
-                print(
-                    f"Images and text added to the PDF. Saved as {output_path}")
-
-                return output_path
-            #  # Open the PDF file with the default viewer
-            #     if os.name == 'nt':  # For Windows
-            #         os.startfile(output_pdf_path)
-            #     elif os.name == 'posix':  # For macOS and Linux
-            #         subprocess.call(['open' if sys.platform == 'darwin' else 'xdg-open', output_pdf_path])
-
-            except Exception as e:
-                print(f"Error: {e}")
-
         images = [
             {
                 'path': os.path.join(current_folder, "Piezo0+125.jpeg"),
@@ -696,6 +622,82 @@ def Main():
                 'scale': 0.45
             }
         ]
+
+        def add_images_and_text_to_pdf(pdf_path, images, output_pdf_path):
+            try:
+                # Open the PDF template
+                pdf_document = fitz.open(pdf_path)
+
+                # Calculate yesterday's date
+                yesterday = datetime.now() - timedelta(1)
+                date_text = yesterday.strftime("%d/%m/%Y")
+
+                # Define font path (adjust path to your font file)
+                # font_path = os.path.join(os.path.dirname(__file__), "Noto Sans Thai Regular.ttf")
+                # if not os.path.exists(font_path):
+                #     raise FileNotFoundError(f"Font file not found: {font_path}")
+
+                # Add text to all pages
+                for page_num in range(len(pdf_document)):
+                    page = pdf_document.load_page(page_num)
+
+                    # Define text to add
+                    text = f"Dam monitoring report {date_text}"
+
+                    # Define text positioning
+                    # Adjust to fit text size and position
+                    text_position = fitz.Point(page.rect.width - 165, 30)
+
+                    # Add text to the page
+                    page.insert_text(
+                        text_position,
+                        text,
+                        fontsize=8,
+                        # fontfile=font_path,  # Use custom font
+                        color=(0, 0, 0)     # Black color
+                    )
+
+                # Loop through the list of images
+                for image_info in images:
+                    image_path = image_info['path']
+                    page_num = image_info['page']
+                    position = image_info['position']
+                    scale = image_info['scale']
+
+                    if not os.path.exists(image_path):
+                        raise FileNotFoundError(
+                            f"Image file not found: {image_path}")
+                    with Image.open(image_path) as img:
+                        img_width, img_height = img.size
+                        new_width = img_width * scale
+                        new_height = img_height * scale
+
+                        page = pdf_document.load_page(page_num)
+                        page.insert_image(
+                            fitz.Rect(position[0], position[1], position[0] +
+                                      new_width, position[1] + new_height),
+                            filename=image_path
+                        )
+
+                    # Delete the image file after insertion
+                    # os.remove(image_path)
+                    # print(f"Deleted image: {image_path}")
+
+                pdf_document.save(output_path)
+                pdf_document.close()
+
+                print(
+                    f"Images and text added to the PDF. Saved as {output_path}")
+
+                return output_path
+            #  # Open the PDF file with the default viewer
+            #     if os.name == 'nt':  # For Windows
+            #         os.startfile(output_pdf_path)
+            #     elif os.name == 'posix':  # For macOS and Linux
+            #         subprocess.call(['open' if sys.platform == 'darwin' else 'xdg-open', output_pdf_path])
+
+            except Exception as e:
+                print(f"Error: {e}")
 
         output_path = add_images_and_text_to_pdf(
             pdf_path, images, output_pdf_path)
