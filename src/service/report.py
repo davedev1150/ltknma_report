@@ -113,7 +113,7 @@ def Main():
             ipi_depth = ipi_depths[inc]
             last_depth_adjusted = ipi_depth[-1] - 3.5
             # Adjusted size for better layout
-            fig = plt.figure(figsize=(20, 12))
+            fig = plt.figure(figsize=(18, 10))
             # Two rows for charts, one small for heading, one for table
             gs = fig.add_gridspec(3, 2, height_ratios=[2, 0.1, 0.5])
             yesterday = pd.Timestamp.now() - pd.DateOffset(days=1)

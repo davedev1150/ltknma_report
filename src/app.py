@@ -98,11 +98,14 @@ if __name__ == '__main__':
     # Initialize the background scheduler
     scheduler = BackgroundScheduler()
 
-    # Schedule the task to run every day at 3 AM
-    # scheduler.add_job(scheduled_report, 'cron', hour=3, minute=0)
+    scheduled_report()
+
+    Schedule the task to run every day at 3 AM
+    scheduler.add_job(scheduled_report, 'cron', hour=3, minute=0)
 
     # Schedule the task to run every 10 minutes
-    scheduler.add_job(scheduled_report, 'interval', minutes=10)
+    #scheduler.add_job(scheduled_report, 'interval', minutes=10)
+    
     print(scheduler.get_jobs())  # Print all jobs in the scheduler
     # Start the scheduler
     scheduler.start()
