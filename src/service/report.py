@@ -513,6 +513,8 @@ def Main():
 
         # *****************************************************************************************************************************************
         SRCDIR = os.path.dirname(os.path.abspath(__file__))
+        if not os.path.exists(SRCDIR):
+            os.makedirs(SRCDIR, exist_ok=True)
         print("SRCDIR", SRCDIR)
         pdf_template_path = os.path.join(
             SRCDIR, "Template-without-chart.pdf")
@@ -704,7 +706,7 @@ def Main():
                 print(f"Error: {e}")
 
         output_pdf_path_export,file_name_export = add_images_and_text_to_pdf()
-
+       
         return output_pdf_path_export, file_name_export
     except Exception as e:
         print("Error in function Main():", e)
