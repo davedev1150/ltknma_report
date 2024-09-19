@@ -36,7 +36,8 @@ def get_data():
 def get_report_data():
     print("Fetching data...")
     report_path = Main()
-    return jsonify({report_path}), 500
+    error_message = str(report_path)
+    return  jsonify({"message": f"Error occurred: {error_message}"}), 500
     # if report_path is None:
     #     return jsonify({"message": "Failed to generate report"}), 500
     # else:
