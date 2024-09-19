@@ -36,13 +36,8 @@ def get_data():
 def get_report_data():
     print("Fetching data...")
     report_path, file_name = Main()
-    
-    SRCDIR = os.path.dirname(os.path.abspath(__file__))
-    print("SRCDIR", SRCDIR)
-    file_path = os.path.join(
-        SRCDIR, "service/", file_name)
-    
-    return send_file(file_path, as_attachment=True, download_name=file_name, mimetype='application/pdf')
+    print("Data fetched successfully.",report_path, file_name)
+    return send_file(report_path, as_attachment=True, download_name=file_name, mimetype='application/pdf')
 
 
 # Function to run the Main() function
