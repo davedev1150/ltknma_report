@@ -6,8 +6,9 @@ import traceback
 from service.report import Main
 from dotenv import load_dotenv
 import os
-import traceback  # Import traceback module
+import pytz
 
+THAI_TZ = pytz.timezone('Asia/Bangkok')
 app = Flask(__name__)
 
 CORS(app)
@@ -79,7 +80,7 @@ def scheduled_report():
         print("Running scheduled report...")
 
         report_path = Main()
-        message = "Generate LTKNMA Report!"
+        message = "Daily Dam Monitoring Report"
         if report_path is None:
             message += "\nFailed to generate report"
         else:
@@ -100,12 +101,14 @@ if __name__ == '__main__':
 
     scheduled_report()
 
-    #Schedule the task to run every day at 3 AM
-    scheduler.add_job(scheduled_report, 'cron', hour=3, minute=0)
+
+    # Schedule the task to run every day at 3 AM in Thailand time (ICT, UTC+7)
+    scheduler.add_job(scheduled_report, CronTrigger(
+        hour=6, minute=0, timezone=THAI_TZ))
 
     # Schedule the task to run every 10 minutes
-    #scheduler.add_job(scheduled_report, 'interval', minutes=10)
-    
+    # scheduler.add_job(scheduled_report, 'interval', minutes=10)
+
     print(scheduler.get_jobs())  # Print all jobs in the scheduler
     # Start the scheduler
     scheduler.start()
