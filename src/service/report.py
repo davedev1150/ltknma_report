@@ -10,6 +10,8 @@ import requests
 import fitz  # PyMuPDF
 import matplotlib
 import traceback
+import pytz
+
 # import logging
 matplotlib.use('Agg')
 
@@ -18,6 +20,8 @@ matplotlib.use('Agg')
 
 def Main():
     try:
+        # Get the timezone for Thailand (ICT)
+        thai_timezone = pytz.timezone('Asia/Bangkok')
         # ***********************************************************************************************************************************
         yesterday = (datetime.now() - timedelta(1)).strftime('%Y-%m-%d')
 
@@ -624,7 +628,9 @@ def Main():
                         'scale': 0.45
                     }
                 ]
-                file_name = f"LTKNMA-Report-{(datetime.now() - timedelta(1)).strftime('%d-%m-%Y')}-{(datetime.now() - timedelta(1)).strftime('%H-%M-%S')}.pdf"
+                now_thai_time = datetime.now(tz=thai_timezone) - timedelta(1)
+                # Format the file name with Thai time
+                file_name = f"LTKNMA-Report-{now_thai_time.strftime('%d-%m-%Y')}-{now_thai_time.strftime('%H-%M-%S')}.pdf"
                 output_pdf_path = os.path.join(
                     SRCDIR, file_name)
                 # Open the PDF template
