@@ -2,6 +2,7 @@ import requests
 from flask import Flask, jsonify, request, send_file, send_from_directory
 from flask_cors import CORS
 from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.triggers.cron import CronTrigger
 import traceback
 from service.report import Main
 from dotenv import load_dotenv
