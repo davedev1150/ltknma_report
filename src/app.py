@@ -102,7 +102,6 @@ if __name__ == '__main__':
 
     scheduled_report()
 
-
     # Schedule the task to run every day at 3 AM in Thailand time (ICT, UTC+7)
     scheduler.add_job(scheduled_report, CronTrigger(
         hour=6, minute=0, timezone=THAI_TZ))

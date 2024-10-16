@@ -23,7 +23,7 @@ def Main():
         # Get the timezone for Thailand (ICT)
         thai_timezone = pytz.timezone('Asia/Bangkok')
         # ***********************************************************************************************************************************
-        yesterday = (datetime.now() - timedelta(1)).strftime('%Y-%m-%d')
+        yesterday = (datetime.now(tz=thai_timezone) - timedelta(1)).strftime('%Y-%m-%d')
 
         ids = ['A16', 'A17']
         # logging.debug("Fetching data...")
@@ -35,7 +35,7 @@ def Main():
                 'X-XSRF-TOKEN': xsrf_token,
                 'X-CSRF-TOKEN': csrf_token
             }
-
+            print("ACC url",url," ",station_id," ",date)
             response = session.get(url, headers=headers, cookies=cookies)
 
             if response.status_code == 200:
@@ -637,7 +637,7 @@ def Main():
                 pdf_document = fitz.open(pdf_template_path)
 
                 # Calculate yesterday's date
-                yesterday = datetime.now() - timedelta(1)
+                yesterday = datetime.now(tz=thai_timezone) - timedelta(1)
                 date_text = yesterday.strftime("%d/%m/%Y")
 
                 # Add text to all pages
