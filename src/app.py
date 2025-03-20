@@ -8,6 +8,7 @@ from service.report import Main
 from dotenv import load_dotenv
 import os
 import pytz
+import pymsteams
 
 THAI_TZ = pytz.timezone('Asia/Bangkok')
 app = Flask(__name__)
@@ -67,6 +68,30 @@ def send_line_notification(message):
         print(response.text)
 
 
+def send_adaptive_card_to_teams(webhook_url, message):
+    adaptive_card_json = {
+        "@type": "MessageCard",
+        "@context": "http://schema.org/extensions",
+        "summary": f"Daily Dam Monitoring Report (ลำตะคอง)",
+        "themeColor": "FF0000",
+        "sections": [{
+            "activityTitle": "🚨 <font color='#992900'><b>**Daily Dam Monitoring Report**</b></font>",
+            "facts": [
+                {"name": "URL:", "value": message},
+            ],
+            "markdown": True
+        }]
+    }
+
+    try:
+        teams_message = pymsteams.connectorcard(webhook_url)
+        teams_message.payload = adaptive_card_json
+        teams_message.send()
+        print("Adaptive card notification sent successfully.")
+    except Exception as e:
+        print(f"Failed to send adaptive card: {e}")
+
+
 @app.route('/get-file/<path:filename>')
 def serve_file(filename):
     SRCDIR = os.path.dirname(os.path.abspath(__file__))
@@ -79,7 +104,7 @@ def serve_file(filename):
 def scheduled_report():
     try:
         print("Running scheduled report...")
-
+        webhook_url = "https://teamgrouppcl.webhook.office.com/webhookb2/c6cb0e26-e275-4b88-8f81-108a668ec06c@e13fef33-a530-4c08-b4d5-2e4711280b4d/IncomingWebhook/52c1f551509f424ea72dd7965f659295/dd59822a-dd77-48a9-b011-21c03af65368/V2mfv6qafKkzygJewXjW5HGtTN90yOm1u2drSsq-U5bkk1"
         report_path = Main()
         message = "Daily Dam Monitoring Report"
         if report_path is None:
@@ -89,7 +114,7 @@ def scheduled_report():
             url = DOMAIN_URL + "/get-file/" + file_name
             message += f"\n{url}"
 
-        send_line_notification(message)
+        send_adaptive_card_to_teams(webhook_url,message)
         print("Report generated successfully.")
     except Exception as e:
         print(f"Error generating reports: {e}")
